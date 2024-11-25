@@ -1,2 +1,3 @@
-nodeJS kur,
-firebase indir (terminal: npm install firebase)
+nodeJS kur bilgisayarına,
+daha sonra firebase indir
+terminalden indirebilirsin vscode içinde : "npm install firebase"
