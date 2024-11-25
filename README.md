@@ -1,7 +1,6 @@
-nodeJS kur bilgisayarına,
-daha sonra firebase indir
-terminalden indirebilirsin vscode içinde : "npm install firebase"
+nodeJS kur bilgisayarına.
+Firebase indir; vscode içinden terminale girip indirebilirsin : "npm install firebase".
 
-eklenti olarak 'Live Server' indir vscode içinde extensions bölümünde yazarsan çıkar
+Eklenti olarak 'Live Server' indir vscode içinde extensions bölümüne yazarsan çıkar en başta.
 
-sign-in html sayfasında sağ tık yapıp "open with live server" seç ve açıldııı
+sign-in.html dosyasında sağ tık yapıp "open with live server" seç ve açıldııı
