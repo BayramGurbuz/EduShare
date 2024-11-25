@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In - EduShare</title>
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="logo-section">
+      <img
+        src="https://edu.buu.ac.th/edushare/img/logo.png"
+        alt="EduShare Platform Logo"
+      />
+    </div>
+    <div class="content-section">
+      <h1>Welcome Back</h1>
+      <h2>Sign in to your account</h2>
+      <form id="signInForm">
+        <label for="signInEmail">Email Address</label>
+        <input
+          type="email"
+          id="signInEmail"
+          placeholder="Enter your email"
+          required
+        />
+        <label for="signInPassword">Password</label>
+        <input
+          type="password"
+          id="signInPassword"
+          placeholder="Enter your password"
+          required
+        />
+        <button type="submit">Sign In</button>
+        <a
+          href="#"
+          id="forgotPasswordLink"
+          aria-description="Click here to reset your password"
+        >Forgot your password?</a>
+      </form>
+      <div class="google-signin-section">
+        <button id="googleSignInButton" class="google-signin-btn">Sign in with Google</button>
+      </div>
+    </div>
+    <div class="register-section">
+      <p>
+        Don't have an account?
+        <a href="register.html" id="registerLink">Register Here</a>
+      </p>
+    </div>
+  </div>
+
+  <script type="module" src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduShare</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="logo-section">
+            <img src="https://edu.buu.ac.th/edushare/img/logo.png" alt="EduShare Logo">
+        </div>
+        <div class="content-section">
+            <h1>Let's Start</h1>
+            <div class="container">
+                <button id="signInBtn">Sign In</button>
+                <button id="signUpBtn">Sign Up</button>
+                <button id="loginGoogleBtn">Log In with Google</button>
+            </div>
+        </div>
+    </div>
+    <div id="overlay"></div>
+
+    <!-- Sign In Popup -->
+    <div class="popup" id="signInPopup">
+        <span class="close-btn" onclick="closePopup()">X</span>
+        <h2>Sign In</h2>
+        <input type="email" id="signInEmail" placeholder="Enter your email" />
+        <input type="password" id="signInPassword" placeholder="Enter your password" />
+        <button onclick="signIn()">Sign In</button>
+        <a class="forgot-password" onclick="openForgotPasswordPopup()">Forgot your password?</a>
+    </div>
+
+    <!-- Forgot Password Popup -->
+    <div class="popup" id="forgotPasswordPopup">
+        <span class="close-btn" onclick="closePopup()">X</span>
+        <h2>Forgot Password</h2>
+        <input type="email" id="forgotPasswordEmail" placeholder="Enter your email" />
+        <button onclick="sendForgotPasswordRequest()">Send Reset Link</button>
+    </div>
+
+    <!-- Sign Up Popup -->
+    <div class="popup" id="signUpPopup">
+        <span class="close-btn" onclick="closePopup()">X</span>
+        <h2>Sign Up</h2>
+        <input type="text" id="signUpFirstName" placeholder="Enter your first name" />
+        <input type="text" id="signUpLastName" placeholder="Enter your last name" />
+        <input type="email" id="signUpEmail" placeholder="Enter your email" />
+        <input type="password" id="signUpPassword" placeholder="Create a password" />
+        <input type="password" id="confirmPassword" placeholder="Confirm your password" />
+        <button onclick="signUp()">Sign Up</button>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
+        import { getFirestore, setDoc, doc } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBsLfTYAVfo474Nz979j23L_hLMWrPV97c",
+            authDomain: "edushare-f2143.firebaseapp.com",
+            projectId: "edushare-f2143",
+            storageBucket: "edushare-f2143.firebasestorage.app",
+            messagingSenderId: "380044138457",
+            appId: "1:380044138457:web:d03205368abb90df9e2bc8"
+        };
+
+        // Firebase'ı başlat
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Popup açma/kapama
+        const overlay = document.getElementById('overlay');
+        const signInPopup = document.getElementById('signInPopup');
+        const signUpPopup = document.getElementById('signUpPopup');
+        const forgotPasswordPopup = document.getElementById('forgotPasswordPopup');
+
+        document.getElementById('signInBtn').onclick = () => openPopup(signInPopup);
+        document.getElementById('signUpBtn').onclick = () => openPopup(signUpPopup);
+        document.getElementById('loginGoogleBtn').onclick = () => openPopup(forgotPasswordPopup);
+
+        function openPopup(popup) {
+            overlay.style.display = 'block';
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            overlay.style.display = 'none';
+            signInPopup.style.display = 'none';
+            signUpPopup.style.display = 'none';
+            forgotPasswordPopup.style.display = 'none';
+        }
+
+        // Firebase giriş işlemi
+        async function signIn() {
+            const email = document.getElementById("signInEmail").value;
+            const password = document.getElementById("signInPassword").value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                window.location.href = 'home.html';
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        }
+
+        // Şifre sıfırlama işlemi
+        async function sendForgotPasswordRequest() {
+            const email = document.getElementById("forgotPasswordEmail").value;
+            try {
+                await sendPasswordResetEmail(auth, email);
+                alert("Password reset link sent.");
+                closePopup();
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        }
+
+        // Yeni kullanıcı kaydı
+        async function signUp() {
+            const firstName = document.getElementById("signUpFirstName").value;
+            const lastName = document.getElementById("signUpLastName").value;
+            const email = document.getElementById("signUpEmail").value;
+            const password = document.getElementById("signUpPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                await setDoc(doc(db, "users", user.uid), {
+                    firstName,
+                    lastName,
+                    email,
+                    faculty: "Default Faculty"
+                });
+                alert("Sign Up Successful!");
+                closePopup();
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        }
+    </script>
+
+</body>
+</html>
