@@ -9,14 +9,13 @@ import {
 
 // Firebase config
 const firebaseConfig = {
-  apiKey: 'AIzaSyAZLKtvxoKis67l3tSchewo_Bl6kVBr0tk',
-  authDomain: 'edushare-2839e.firebaseapp.com',
-  projectId: 'edushare-2839e',
-  storageBucket: 'edushare-2839e.appspot.com',
-  messagingSenderId: '88830203425',
-  appId: '1:88830203425:web:3e1c3a5dea246292e2f560',
-};
-
+    apiKey: "....",
+    authDomain: "...",
+    projectId: "...",
+    storageBucket: ""...",",
+    messagingSenderId: ""...",",
+    appId: ""...","
+  };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
